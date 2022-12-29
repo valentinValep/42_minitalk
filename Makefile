@@ -14,7 +14,7 @@ SOURCES_DIR := src
 BINARIES_DIR := bin
 
 CLIENT_SRC := client_main.c
-SERVER_SRC := client_main.c
+SERVER_SRC := server_main.c
 
 CLIENT_OBJ := $(CLIENT_SRC:.c=.o)
 SERVER_OBJ := $(SERVER_SRC:.c=.o)
@@ -31,6 +31,8 @@ SERVER_HEADERS := $(addprefix $(SOURCES_DIR)/,$(SERVER_HEADERS))
 
 RM := rm -f
 
+all : $(CLIENT_NAME) $(SERVER_NAME)
+
 $(CLIENT_NAME) : $(CLIENT_OBJ)
 	$(CC) $(CLIENT_OBJ) $(LIBRARIES) -o $(CLIENT_NAME)
 
@@ -42,8 +44,6 @@ $(BINARIES_DIR) :
 # @TODO rm -g3
 $(BINARIES_DIR)/%.o : $(SOURCES_DIR)/%.c $(CLIENT_HEADERS) $(SERVER_HEADERS) | $(BINARIES_DIR)
 	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@ -g3
-
-all : $(CLIENT_NAME) $(SERVER_NAME)
 
 clean :
 	$(RM) $(CLIENT_OBJ) $(SERVER_OBJ)

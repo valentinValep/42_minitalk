@@ -1,4 +1,5 @@
 # TODOs
+- Test invalid inputs
 - do @TODO
 - verif mallocs
 - verif frees
