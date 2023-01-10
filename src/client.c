@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int	received;
+int	g_received;
 
 void	handler(int sig)
 {
