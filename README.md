@@ -7,3 +7,4 @@
 - valgrind
 - norm
 - put every header in master branch (.c .h Makefile)
+- rm this file in master branch
