@@ -11,7 +11,7 @@ void	send_char(__pid_t pid, char c)
 	while (++i < (int)sizeof(char) * 8)
 	{
 		kill(pid, (int []){SIGUSR1, SIGUSR2}[(c >> i) & 1]);
-		usleep(10000);
+		usleep(1000);
 	}
 }
 
