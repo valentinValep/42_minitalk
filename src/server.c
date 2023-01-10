@@ -40,6 +40,7 @@ int	main(void)
 	ft_printf("Program PID : %d\n", getpid());
 	act.sa_sigaction = action;
 	act.sa_flags = SA_SIGINFO;
+	sigemptyset(&act.sa_mask);
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
 	while (1)
