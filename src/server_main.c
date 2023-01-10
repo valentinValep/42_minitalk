@@ -1,9 +1,7 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <unistd.h>
-// @TODO rm includes bellow
-#include <stdio.h>
-
+#include "libft.h"
 void	handler(int sig)
 {
 	static int	i;
@@ -26,7 +24,7 @@ void	handler(int sig)
 
 int	main(void)
 {
-	printf("Program PID : %d\n", getpid());
+	ft_printf("Program PID : %d\n", getpid());
 
 	signal(SIGUSR1, handler);
 	signal(SIGUSR2, handler);

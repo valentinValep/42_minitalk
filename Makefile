@@ -5,9 +5,9 @@ CC := cc
 
 FLAGS := -Wall -Werror -Wextra
 
-INCLUDES := -Isrc
+INCLUDES := -Isrc -Ilibft
 
-LIBRARIES :=
+LIBRARIES := -Llibft -lft
 
 SOURCES_DIR := src
 
@@ -34,9 +34,11 @@ RM := rm -f
 all : $(CLIENT_NAME) $(SERVER_NAME)
 
 $(CLIENT_NAME) : $(CLIENT_OBJ)
+	make -C libft
 	$(CC) $(CLIENT_OBJ) $(LIBRARIES) -o $(CLIENT_NAME)
 
 $(SERVER_NAME) : $(SERVER_OBJ)
+	make -C libft
 	$(CC) $(SERVER_OBJ) $(LIBRARIES) -o $(SERVER_NAME)
 
 $(BINARIES_DIR) :
@@ -46,9 +48,11 @@ $(BINARIES_DIR)/%.o : $(SOURCES_DIR)/%.c $(CLIENT_HEADERS) $(SERVER_HEADERS) | $
 	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@ -g3
 
 clean :
+	make -C libft clean
 	$(RM) $(CLIENT_OBJ) $(SERVER_OBJ)
 
 fclean : clean
+	make -C libft fclean
 	$(RM) $(CLIENT_NAME) $(SERVER_NAME)
 
 re : fclean all

@@ -1,8 +1,8 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <unistd.h>
-// @TODO rm include bellow
-#include <stdlib.h>
+#include "libft.h"
+
 void	send_char(__pid_t pid, char c)
 {
 	int	i;
@@ -25,5 +25,5 @@ int	main(int argc, char **argv)
 	// @TODO verif argv[1] is a pid
 	i = -1;
 	while ((i == -1 && i++) || argv[2][i++])
-		send_char(atoi(argv[1]), argv[2][i]);
+		send_char(ft_atoi(argv[1]), argv[2][i]);
 }
