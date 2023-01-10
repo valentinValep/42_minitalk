@@ -2,6 +2,7 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 int	received;
 
@@ -18,7 +19,8 @@ void	send_char(__pid_t pid, char c)
 	i = -1;
 	while (++i < (int) sizeof(char) * 8)
 	{
-		kill(pid, (int []){SIGUSR1, SIGUSR2}[(c >> i) & 1]);
+		if (kill(pid, (int []){SIGUSR1, SIGUSR2}[(c >> i) & 1]))
+			exit(1);
 		while (!received)
 			;
 		received = 0;
@@ -34,7 +36,8 @@ int	main(int argc, char **argv)
 					"You need 2 args : server pid and a string", 41), 0));
 	if (kill(ft_atoi(argv[1]), 0))
 		return ((write(STDOUT_FILENO, "Invalid PID", 11), 1));
-	signal(SIGUSR1, handler);
+	if (signal(SIGUSR1, handler) == SIG_ERR)
+		return (1);
 	i = -1;
 	while ((i == -1 && i++) || argv[2][i++])
 		send_char(ft_atoi(argv[1]), argv[2][i]);

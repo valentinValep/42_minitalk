@@ -2,7 +2,7 @@
 - Test invalid inputs
 - do @TODO
 - Ask how to compile bonus ?
-- verif mallocs
+- verif mallocs and every return
 - verif frees
 - valgrind
 - norm
