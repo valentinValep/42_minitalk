@@ -13,8 +13,8 @@ SOURCES_DIR := src
 
 BINARIES_DIR := bin
 
-CLIENT_SRC := client_main.c
-SERVER_SRC := server_main.c
+CLIENT_SRC := client.c
+SERVER_SRC := server.c
 
 CLIENT_OBJ := $(CLIENT_SRC:.c=.o)
 SERVER_OBJ := $(SERVER_SRC:.c=.o)
@@ -24,7 +24,7 @@ CLIENT_OBJ := $(addprefix $(BINARIES_DIR)/,$(CLIENT_OBJ))
 SERVER_SRC := $(addprefix $(SOURCES_DIR)/,$(SERVER_SRC))
 SERVER_OBJ := $(addprefix $(BINARIES_DIR)/,$(SERVER_OBJ))
 
-CLIENT_HEADERS := client.h
+CLIENT_HEADERS :=
 SERVER_HEADERS := server.h
 CLIENT_HEADERS := $(addprefix $(SOURCES_DIR)/,$(CLIENT_HEADERS))
 SERVER_HEADERS := $(addprefix $(SOURCES_DIR)/,$(SERVER_HEADERS))
@@ -32,6 +32,8 @@ SERVER_HEADERS := $(addprefix $(SOURCES_DIR)/,$(SERVER_HEADERS))
 RM := rm -f
 
 all : $(CLIENT_NAME) $(SERVER_NAME)
+
+bonus : all
 
 $(CLIENT_NAME) : $(CLIENT_OBJ)
 	make -C libft
