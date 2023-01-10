@@ -3,6 +3,14 @@
 #include <signal.h>
 #include <unistd.h>
 
+int	received;
+
+void	handler(int sig)
+{
+	(void) sig;
+	received = 1;
+}
+
 void	send_char(__pid_t pid, char c)
 {
 	int	i;
@@ -11,7 +19,9 @@ void	send_char(__pid_t pid, char c)
 	while (++i < (int) sizeof(char) * 8)
 	{
 		kill(pid, (int []){SIGUSR1, SIGUSR2}[(c >> i) & 1]);
-		usleep(800);
+		while (!received)
+			;
+		received = 0;
 	}
 }
 
@@ -23,6 +33,7 @@ int	main(int argc, char **argv)
 		return ((write(STDOUT_FILENO,
 					"You need 2 args : server pid and a string", 41), 0));
 	// @TODO verif argv[1] is a pid
+	signal(SIGUSR1, handler);
 	i = -1;
 	while ((i == -1 && i++) || argv[2][i++])
 		send_char(ft_atoi(argv[1]), argv[2][i]);
