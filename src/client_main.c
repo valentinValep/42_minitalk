@@ -20,8 +20,8 @@ int	main(int argc, char **argv)
 	int	i;
 
 	if (argc != 3)
-		return ((write(STDOUT_FILENO, "You need 2 args : server pid and a string", 41), 0));
-
+		return ((write(STDOUT_FILENO,
+					"You need 2 args : server pid and a string", 41), 0));
 	// @TODO verif argv[1] is a pid
 	i = -1;
 	while ((i == -1 && i++) || argv[2][i++])
