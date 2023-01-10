@@ -45,9 +45,9 @@ $(SERVER_NAME) : $(SERVER_OBJ)
 
 $(BINARIES_DIR) :
 	mkdir $(BINARIES_DIR)
-# @TODO rm -g3
+
 $(BINARIES_DIR)/%.o : $(SOURCES_DIR)/%.c $(CLIENT_HEADERS) $(SERVER_HEADERS) | $(BINARIES_DIR)
-	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@ -g3
+	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
 
 clean :
 	make -C libft clean
