@@ -1,7 +1,7 @@
+#include "libft.h"
 #include <sys/types.h>
 #include <signal.h>
 #include <unistd.h>
-#include "libft.h"
 
 void	send_char(__pid_t pid, char c)
 {

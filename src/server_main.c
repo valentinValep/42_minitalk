@@ -1,35 +1,35 @@
+#include "server.h"
+#include "libft.h"
 #include <sys/types.h>
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "libft.h"
+
 void	handler(int sig)
 {
-	static int		i;
-	static char		c;
-	static t_string	str;
+	static t_handler_storage	store;
 
 	if (sig != SIGUSR1 && sig != SIGUSR2)
 		return ;
-	c += (sig == SIGUSR2) << i;
-	i++;
-	if (!str.str && ft_init_string(&str, NULL))
+	store.c += (sig == SIGUSR2) << store.i;
+	store.i++;
+	if (!store.str.str && ft_init_string(&store.str, NULL))
 		exit(1);
-	if (i == sizeof(char) * 8)
+	if (store.i == sizeof(char) * 8)
 	{
-		if (c)
+		if (store.c)
 		{
-			if (ft_cat_string(&str, (char []){c, 0}))
+			if (ft_cat_string(&store.str, (char []){store.c, 0}))
 				exit(1);
 		}
 		else
 		{
-			write(STDOUT_FILENO, str.str, str.strlen);
+			write(STDOUT_FILENO, store.str.str, store.str.strlen);
 			write(STDOUT_FILENO, "\n", 1);
-			ft_destroy_string(&str);
+			ft_destroy_string(&store.str);
 		}
-		i = 0;
-		c = 0;
+		store.i = 0;
+		store.c = 0;
 	}
 }
 
