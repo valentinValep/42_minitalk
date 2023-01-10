@@ -20,8 +20,8 @@ void	action(int sig, siginfo_t *siginfo, void *context)
 	{
 		if (!store.c)
 		{
-			write(STDOUT_FILENO,
-				(char []){store.str.str, "\n"}, store.str.strlen + 1);
+			write(STDOUT_FILENO, store.str.str, store.str.strlen);
+			write(STDOUT_FILENO, "\n", 1);
 			ft_destroy_string(&store.str);
 		}
 		else
