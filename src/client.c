@@ -6,7 +6,7 @@
 /*   By: vlepille <vlepille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 19:36:40 by vlepille          #+#    #+#             */
-/*   Updated: 2023/01/10 19:36:41 by vlepille         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:27:55 by vlepille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	g_received;
 void	handler(int sig)
 {
 	(void) sig;
-	received = 1;
+	g_received = 1;
 }
 
 void	send_char(__pid_t pid, char c)
@@ -33,9 +33,9 @@ void	send_char(__pid_t pid, char c)
 	{
 		if (kill(pid, (int []){SIGUSR1, SIGUSR2}[(c >> i) & 1]))
 			exit(1);
-		while (!received)
+		while (!g_received)
 			;
-		received = 0;
+		g_received = 0;
 	}
 }
 
