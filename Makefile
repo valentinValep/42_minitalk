@@ -6,18 +6,20 @@
 #    By: vlepille <vlepille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 19:36:54 by vlepille          #+#    #+#              #
-#    Updated: 2023/01/10 19:36:56 by vlepille         ###   ########.fr        #
+#    Updated: 2023/02/14 16:57:11 by vlepille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CLIENT_NAME := client
 SERVER_NAME := server
+BONUS_CLIENT_NAME := client_bonus
+BONUS_SERVER_NAME := server_bonus
 
 CC := cc
 
 FLAGS := -Wall -Werror -Wextra
 
-INCLUDES := -Isrc -Ilibft
+INCLUDES := -Ilibft -Iincludes
 
 LIBRARIES := -Llibft -lft
 
@@ -25,27 +27,23 @@ SOURCES_DIR := src
 
 BINARIES_DIR := bin
 
-CLIENT_SRC := client.c
-SERVER_SRC := server.c
+CLIENT_OBJ := client.o
+SERVER_OBJ := server.o
 
-CLIENT_OBJ := $(CLIENT_SRC:.c=.o)
-SERVER_OBJ := $(SERVER_SRC:.c=.o)
-
-CLIENT_SRC := $(addprefix $(SOURCES_DIR)/,$(CLIENT_SRC))
 CLIENT_OBJ := $(addprefix $(BINARIES_DIR)/,$(CLIENT_OBJ))
-SERVER_SRC := $(addprefix $(SOURCES_DIR)/,$(SERVER_SRC))
 SERVER_OBJ := $(addprefix $(BINARIES_DIR)/,$(SERVER_OBJ))
 
-CLIENT_HEADERS :=
-SERVER_HEADERS := server.h
-CLIENT_HEADERS := $(addprefix $(SOURCES_DIR)/,$(CLIENT_HEADERS))
-SERVER_HEADERS := $(addprefix $(SOURCES_DIR)/,$(SERVER_HEADERS))
+BONUS_CLIENT_OBJ := client_bonus.o
+BONUS_SERVER_OBJ := server_bonus.o
+
+BONUS_CLIENT_OBJ := $(addprefix $(BINARIES_DIR)/,$(BONUS_CLIENT_OBJ))
+BONUS_SERVER_OBJ := $(addprefix $(BINARIES_DIR)/,$(BONUS_SERVER_OBJ))
 
 RM := rm -f
 
 all : $(CLIENT_NAME) $(SERVER_NAME)
 
-bonus : all
+bonus : $(BONUS_CLIENT_NAME) $(BONUS_SERVER_NAME)
 
 $(CLIENT_NAME) : $(CLIENT_OBJ)
 	make -C libft
@@ -55,19 +53,27 @@ $(SERVER_NAME) : $(SERVER_OBJ)
 	make -C libft
 	$(CC) $(SERVER_OBJ) $(LIBRARIES) -o $(SERVER_NAME)
 
+$(BONUS_CLIENT_NAME) : $(BONUS_CLIENT_OBJ)
+	make -C libft
+	$(CC) $(BONUS_CLIENT_OBJ) $(LIBRARIES) -o $(BONUS_CLIENT_NAME)
+
+$(BONUS_SERVER_NAME) : $(BONUS_SERVER_OBJ)
+	make -C libft
+	$(CC) $(BONUS_SERVER_OBJ) $(LIBRARIES) -o $(BONUS_SERVER_NAME)
+
 $(BINARIES_DIR) :
 	mkdir $(BINARIES_DIR)
 
-$(BINARIES_DIR)/%.o : $(SOURCES_DIR)/%.c $(CLIENT_HEADERS) $(SERVER_HEADERS) | $(BINARIES_DIR)
+$(BINARIES_DIR)/%.o : $(SOURCES_DIR)/%.c | $(BINARIES_DIR)
 	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
 
 clean :
 	make -C libft clean
-	$(RM) $(CLIENT_OBJ) $(SERVER_OBJ)
+	$(RM) $(CLIENT_OBJ) $(SERVER_OBJ) $(BONUS_CLIENT_OBJ) $(BONUS_SERVER_OBJ)
 
 fclean : clean
 	make -C libft fclean
-	$(RM) $(CLIENT_NAME) $(SERVER_NAME)
+	$(RM) $(CLIENT_NAME) $(SERVER_NAME) $(BONUS_CLIENT_NAME) $(BONUS_SERVER_NAME)
 
 re : fclean all
 
