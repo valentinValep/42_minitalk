@@ -6,7 +6,7 @@
 /*   By: vlepille <vlepille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 19:36:40 by vlepille          #+#    #+#             */
-/*   Updated: 2023/02/14 19:09:02 by vlepille         ###   ########.fr       */
+/*   Updated: 2023/03/14 13:37:59 by vlepille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	send_char(__pid_t pid, char c)
 		{
 			usleep(1);
 			usecond++;
-			if (usecond > 1000000)
+			if (usecond > 100000)
 			{
 				write(STDOUT_FILENO, "No server response : Stop\n", 26);
 				i = -1;
@@ -68,5 +68,5 @@ int	main(int argc, char **argv)
 	i = -1;
 	while ((i == -1 && i++) || argv[2][i++])
 		send_char(server_pid, argv[2][i]);
-	write(STDOUT_FILENO, "Message succefully send\n", 13);
+	write(STDOUT_FILENO, "Message succefully send\n", 24);
 }
